@@ -1,72 +1,42 @@
-# Filtrage de Données Bancaires
+Arbre de Décision pour les Données Bancaires
+Ce projet implémente un modèle d'arbre de décision pour analyser les données bancaires et prédire si un client acceptera une offre basée sur plusieurs caractéristiques.
 
-Ce projet vise à filtrer et analyser des données bancaires afin d'extraire des informations pertinentes pour diverses applications, telles que la gestion financière, la détection de fraudes ou la génération de rapports.
+Prérequis
+Assurez-vous d'avoir les bibliothèques suivantes installées dans votre environnement Python :
 
-## Fonctionnalités
+pandas : pour manipuler les données
+matplotlib : pour visualiser l'arbre de décision
+scikit-learn : pour créer le modèle d'arbre de décision
+Installation des bibliothèques
+Vous pouvez installer les dépendances nécessaires avec la commande suivante :
 
-- **Filtrage Personnalisé** : Sélection des transactions selon des critères définis (montant, type, date, etc.).
-- **Nettoyage des Données** : Suppression des doublons, gestion des valeurs manquantes et uniformisation des formats.
-- **Analyse** : Calcul de statistiques (totaux, moyennes, tendances).
-- **Exportation** : Sauvegarde des résultats dans des formats tels que CSV, Excel ou JSON.
+pip install pandas matplotlib scikit-learn
+Fichier de données
+Le fichier de données utilisé est bank-additional-full.csv, qui contient des informations provenant d'une campagne bancaire. Assurez-vous que ce fichier est dans le même répertoire que le script Python ou fournissez le chemin correct.
 
-## Prérequis
+Contenu du Script
+Le script effectue les étapes suivantes :
 
-- **Python 3.8+**
-- Bibliothèques Python :
-  - pandas
-  - numpy
-  - matplotlib (pour les visualisations)
+Chargement des données : Lecture du fichier CSV contenant les données bancaires.
+Préparation des données :
+Transformation de la colonne cible y en valeurs binaires (1 pour "yes", 0 pour "no").
+Sélection des colonnes pertinentes comme variables explicatives.
+Construction du modèle :
+Division des données en ensembles d'entraînement et de test.
+Création d'un modèle d'arbre de décision avec une profondeur maximale de 5.
+Visualisation de l'arbre :
+Affichage et sauvegarde de l'arbre de décision sous forme d'image (decision_tree_bank.jpg).
+Exemple d'Exécution
+Voici comment exécuter le script :
 
-## Installation
-
-1. **Cloner le dépôt** :
-
-   ```bash
-   git clone https://github.com/mimounzouhri/data-bank.git
-   cd data-bank
-Installer les dépendances :
-
-Toujours afficher les détails
-pip install -r requirements.txt
-Placer les fichiers de données : Assurez-vous que le fichier bank-additional-full.csv est présent dans le répertoire principal du projet.
-
-Utilisation
-Configurer les critères de filtrage : Modifiez le fichier config.json pour spécifier vos critères (montants, types de transactions, dates, etc.).
-
-Exemple de configuration :
-
-Toujours afficher les détails
-{
-    "montant_min": 100,
-    "montant_max": 1000,
-    "types_transaction": ["Paiement", "Virement"],
-    "dates": {
-        "debut": "2023-01-01",
-        "fin": "2023-12-31"
-    }
-}
-Exécuter le script principal :
-
-Toujours afficher les détails
+Placez le fichier bank-additional-full.csv dans le même répertoire que le script Python.
+Lancez le script :
 python main.py
-Consulter les résultats : Les fichiers filtrés seront générés dans le dossier output/.
+Une fois le script terminé, l'arbre de décision sera affiché et enregistré sous forme d'image dans le fichier decision_tree_bank.jpg.
+Résultat
+L'image générée montre un arbre de décision interprétable qui aide à comprendre les facteurs influençant la réponse d'un client à une offre bancaire.
 
-Structure du Projet
-Toujours afficher les détails
-data-bank/
-├── bank-additional-full.csv  # Données brutes
-├── main.py                   # Script principal
-├── config.json               # Configuration des critères
-├── output/                   # Résultats filtrés
-├── requirements.txt          # Liste des dépendances
-└── README.md                 # Documentation du projet
-Contribution
-Les contributions sont les bienvenues ! Si vous souhaitez proposer des améliorations ou signaler des problèmes, veuillez ouvrir une issue ou soumettre une pull request.
-
+Auteurs
+[ZOUHRI Mimoun]
 Licence
-Ce projet est sous licence MIT. Veuillez consulter le fichier LICENSE pour plus d'informations. """
-
-Write the README content to a file
-with open("/mnt/data/README.md", "w") as file: file.write(readme_content)
-
-"/mnt/data/README.md"
+Ce projet est sous licence libre. Vous êtes libre de le modifier et de le partager.

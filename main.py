@@ -1,50 +1,29 @@
+# Importer les bibliothèques nécessaires
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import train_test_split
 
-# Charger le fichier
-file_path = 'bank-additional-full.csv'
-data = pd.read_csv(file_path, sep=';')
+# Charger les données depuis le fichier CSV
+data = pd.read_csv('bank-additional-full.csv', sep=';')  # Spécifier le séparateur correct
+print(data.head())  # Vérifiez les premières lignes des données
 
+# Convertir la colonne cible 'y' en valeurs binaires
+data['y'] = data['y'].map({'yes': 1, 'no': 0})  # 1 pour 'yes', 0 pour 'no'
 
-def apply_filters(data):
-    print("Colonnes disponibles pour filtrer :")
-    print(data.columns.tolist())
+# Préparer les variables explicatives et la cible
+X = data[['age', 'campaign', 'previous', 'emp.var.rate', 'cons.price.idx', 'cons.conf.idx', 'euribor3m', 'nr.employed']]
+y = data['y']
 
-    column = input("\nEntrez le nom de la colonne à filtrer : ")
-    if column not in data.columns:
-        print("Colonne non valide. Veuillez réessayer.")
-        return data
+# Diviser les données en ensembles d'entraînement et de test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    print("\nChoisissez le type de filtre :")
-    print("1 - Valeur spécifique")
-    print("2 - Plage de valeurs (pour les colonnes numériques)")
-    filter_type = input("Entrez le numéro du type de filtre : ")
+# Créer le classificateur d'arbre de décision
+clf = DecisionTreeClassifier(max_depth=5, random_state=42)
+clf.fit(X_train, y_train)
 
-    if filter_type == "1":
-        value = input(f"Entrez la valeur que vous souhaitez garder dans la colonne '{column}': ")
-        filtered_data = data[data[column] == value]
-    elif filter_type == "2":
-        if not pd.api.types.is_numeric_dtype(data[column]):
-            print(f"La colonne '{column}' n'est pas numérique. Plage de valeurs non applicable.")
-            return data
-        min_value = float(input(f"Entrez la valeur minimale pour '{column}': "))
-        max_value = float(input(f"Entrez la valeur maximale pour '{column}': "))
-        filtered_data = data[(data[column] >= min_value) & (data[column] <= max_value)]
-    else:
-        print("Type de filtre invalide. Veuillez réessayer.")
-        return data
-
-    print(f"\nFiltre appliqué sur '{column}' :")
-    print(filtered_data.head())
-    return filtered_data
-
-
-filtered_data = data
-while True:
-    filtered_data = apply_filters(filtered_data)
-    more_filters = input("\nVoulez-vous ajouter un autre filtre ? (oui/non) : ").lower()
-    if more_filters != "oui":
-        break
-
-output_path = '/mnt/data/filtered_data.csv'
-filtered_data.to_csv(output_path, index=False)
-print(f"\nLes données filtrées ont été exportées dans : {output_path}")
+# Visualiser l'arbre de décision
+plt.figure(figsize=(15, 10))
+plot_tree(clf, feature_names=X.columns, class_names=['No', 'Yes'], filled=True)
+plt.savefig("decision_tree_bank.jpg", format='jpg', dpi=300)  # Enregistrer l'arbre en image
+plt.show()
