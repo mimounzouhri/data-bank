@@ -1,4 +1,3 @@
-readme_content = """
 # Filtrage de Données Bancaires
 
 Ce projet vise à filtrer et analyser des données bancaires afin d'extraire des informations pertinentes pour diverses applications, telles que la gestion financière, la détection de fraudes ou la génération de rapports.
